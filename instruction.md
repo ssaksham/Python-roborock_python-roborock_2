@@ -8,6 +8,8 @@ A retained device's newly reported device and product details, including derived
 
 Fresh account room names must reach retained V1 room traits without reconnecting otherwise unchanged devices or waiting for a new room identifier. Their next room refresh must use the latest names and discard obsolete names. Preserve shared-device room lookup behavior and the existing suppression of repeated lookups for unresolved IDs. A successful empty room response clears obsolete names; a failed room lookup retains the last known names. An older room lookup finishing after rediscovery must not overwrite the newer account room names.
 
+Because discovery runs periodically, it may overlap with itself or with device connection and refresh work already in progress. Overlapping fresh discoveries must settle on the latest account snapshot rather than resurrecting devices an overlapping call removed, and must not create duplicate clients or duplicate ready callbacks for the same device. The same late-work protections apply when a device's details change and its client is replaced: work started by the previous client must not overwrite the replacement client's cache or account state.
+
 A cache-preferred discovery or a failed cloud fetch falling back to cached data is not evidence of account changes: keep existing clients and cache entries intact. Cached data must still be usable to bootstrap a new manager when the cloud is unavailable. Preserve normal unsupported-device handling and the existing connection behavior for newly added devices.
 
 IMPORTANT: Please work on this in a new branch from main and commit everything when you are done.
