@@ -29,10 +29,12 @@ ENV GIT_PAGER=cat
 RUN mkdir -p /opt/build-cache \
  && /usr/local/bin/python3 -I -S -m venv /opt/venv
 RUN TMPDIR=/opt/build-cache /opt/venv/bin/python -I -S - <<'PY'
+import importlib
 import runpy
 import sys
 import tomllib
-from pathlib import Path
+
+Path = importlib.import_module("pathlib").Path
 
 project = tomllib.loads(Path("/app/pyproject.toml").read_text())
 lock = tomllib.loads(Path("/app/uv.lock").read_text())
@@ -56,13 +58,15 @@ PY
 # the configured Mypy hook and its additional stub dependencies.
 RUN PRE_COMMIT_HOME=/opt/pre-commit TMPDIR=/opt/build-cache PIP_NO_CACHE_DIR=1 \
     /opt/venv/bin/python -I -S -B - <<'PY'
+import importlib
 import sys
 
 sys.prefix = sys.exec_prefix = "/opt/venv"
 sys.path.append("/opt/venv/lib/python3.12/site-packages")
-from pre_commit.clientlib import load_config
-from pre_commit.repository import all_hooks, install_hook_envs
-from pre_commit.store import Store
+load_config = importlib.import_module("pre_commit.clientlib").load_config
+_repository = importlib.import_module("pre_commit.repository")
+all_hooks, install_hook_envs = _repository.all_hooks, _repository.install_hook_envs
+Store = importlib.import_module("pre_commit.store").Store
 
 config_path = "/app/.pre-commit-config.yaml"
 config = load_config(config_path)
