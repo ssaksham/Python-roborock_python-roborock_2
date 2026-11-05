@@ -4,16 +4,16 @@ schema_version = "1.3"
 artifacts = ["/logs/artifacts/model.patch"]
 [task]
 name = "Python-roborock_python-roborock_2"  # set at seeding
-description = ""  # FELLOW, required: one or two plain sentences saying what the task asks for
-authors = [{ name = "Your Name" }]  # FELLOW, required: replace Your Name with your full name. Name only, no email
-keywords = []  # FELLOW, required: a few short topic words, for example ["cli", "parsing"]
+description = "Reconcile repeated device discovery with account removals and metadata changes while preventing retired connections from restoring stale cache data."
+authors = [{ name = "Saksham Sharma" }]
+keywords = ["asyncio", "discovery", "cache", "lifecycle", "roborock"]
 [metadata]
 ext_id = ""  # LOCKED: stays empty, issued at packaging time
 task_id = "e3f393d0-192c-4504-9349-7e06868c29a5"  # LOCKED: the task id, set at seeding
 hai_difficulty = "medium"  # LOCKED: easy, medium or hard, set at seeding
-annotator_id = ""  # FELLOW: your annotator id
-display_title = ""  # FELLOW, required: a short plain title for the task, not the repository name
-display_description = ""  # FELLOW, required: one plain sentence describing the task for a reader
+annotator_id = "f3adb1e4-ef0a-4405-96d6-7e049d1c261d"
+display_title = "Keep rediscovery and device caches in sync"
+display_description = "Update device metadata and room names, retire removed clients, and keep late reconnect work from restoring deleted cache entries."
 original_title = "Re-running discovery should drop removed devices and pick up renames"  # the seed idea's title, set at seeding: keep it
 category = "bugfix"  # FELLOW: bugfix | enhancement | feature_request
 language = "python"  # FELLOW: go | javascript | python | rust | typescript
